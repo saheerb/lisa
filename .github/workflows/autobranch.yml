@@ -79,7 +79,7 @@ jobs:
 
       - name: Create autobranch branches
         run: |
-          set -e
+          set -ex
 
           cd origin-repo &&
           export LC_ALL=C
@@ -110,8 +110,8 @@ jobs:
                   git -C "$worktree" apply --index "../origin-repo/$patch" &&
                   git -C "$worktree" commit --all -m "Autocommit to $branch branch on $(date) tracking $force_branch"
 
-                  git push --force origin "$force_branch"
-                  git push origin "$branch"
+                  git push --force origin "$force_branch" --dry-run
+                  git push origin "$branch" --dry-run
               else
                   echo "Empty patch, $branch and $force_branch branches are up to date."
               fi
